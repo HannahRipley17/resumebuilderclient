@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded:400,700&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="style.css"></link>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+  	<link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	</head>
+<body>
+	<div id="app">
+		<v-app>
+			<v-content>
+				<v-toolbar>
+					<v-toolbar-title class="text-uppercase">
+						<span class="font-weight-regular">Resume</span><span class="font-weight-thin">builder</span>
+					</v-toolbar-title>
+					<v-spacer></v-spacer>
+					<v-toolbar-items>
+						<v-btn flat @click="page = 'fillin'">Fill-in</v-btn>
+						<v-btn flat @click="page = 'preview'">Preview</v-btn>
+					</v-toolbar-items>
+				</v-toolbar>
+				<v-container v-if="page == 'fillin'">
+					<v-layout justify-center>
+						<v-flex xs10>
+							<v-card>
+								<v-card-title class="justify-center"></v-card-title>
+								<v-card-text>
+									<v-layout>
+										<v-flex xs6 pa-3>
+											<v-text-field label="First Name" v-model="info.first_name"></v-text-field>
+										</v-flex>
+										<v-flex pa-3>
+											<v-text-field label="Last Name" v-model="info.last_name"></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout>
+										<v-flex xs12 pa-3>
+											<v-text-field label="Address" v-model="info.address"></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout>
+										<v-flex xs6 pa-3>
+											<v-text-field label="City" v-model="info.city"></v-text-field>
+										</v-flex>
+										<v-flex pa-3>
+											<v-text-field label="State" v-model="info.state"></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout>
+										<v-flex xs6 pa-3>
+											<v-text-field label="Zip Code" v-model="info.zip"></v-text-field>
+										</v-flex>
+									</v-layout>
+									<v-layout column>
+										<v-flex xs6 pa-3>
+											<span>Select a gender:</span>
+											<v-radio-group v-model="info.gender">
+												<v-radio label="Male" value="male"></v-radio>
+												<v-radio label="Female" value="female"></v-radio>
+												<v-radio label="Other" value="other"></v-radio>
+											</v-radio-group>
+										</v-flex>
+									</v-layout>
+									<v-layout>
+										<v-flex xs8 pa-3>
+											<v-select label="Pick a theme color" :items="colors"
+											v-model="picked_color"
+											:color="picked_color"
+											:class="computedColorClass"></v-select>
+										</v-flex>
+										<v-flex xs4 pa-3>
+											<v-avatar v-bind:color="picked_color" :class="computedColorClass"></v-avatar>
+										</v-flex>
+									</v-layout>
+									<v-layout>
+										<v-flex pa-3>
+											<v-slider
+											label="Brightness"
+											:color="picked_color"
+											:min="1"
+											:max="10"
+											v-model="color_brightness"
+											:class="computedColorClass">
+										</v-slider>
+										</v-flex>
+									</v-layout>
+									<v-layout column>
+										<v-flex pa-3>
+											<span>Accent color?</span>
+											<v-radio-group v-model="accent">
+												<v-radio label="Accent 1" value="11" :class="computedColorClass"></v-radio>
+												<v-radio label="Accent 2" value="12" :class="computedColorClass"></v-radio>
+												<v-radio label="Accent 3" value="13" :class="computedColorClass"></v-radio>
+												<v-radio label="Accent 4" value="14" :class="computedColorClass"></v-radio>
+												<v-radio label="None" value="0"></v-radio>
+											</v-radio-group>
+										</v-flex>
+									</v-layout>
+								</v-card-text>
+							</v-card>
+						</v-flex>
+
+					</v-layout>
+				</v-container>
+				<v-container v-if="page == 'preview'">
+					<v-layout justify-center>
+						<v-flex xs10>
+							<v-card>
+								<v-responsive :aspect-ratio="8.5/11">
+									<v-toolbar flat color="blue-grey"></v-toolbar>
+								</v-responsive>
+							</v-card>
+					</v-flex>
+				</v-layout>
+				</v-container>
+
+
+			</v-content>
+		</v-app>
+
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+	<script src="code.js"></script>
+
+	</body>
+	</html>
