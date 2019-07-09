@@ -11,6 +11,44 @@ var app= new Vue ({
             work1enddate: "",
             work1description: "",
         },
+        education1: {
+          college: "",
+          degree: "",
+          gradyear: "",
+        },
+        accomplishment1: {
+          title: "",
+          description: "",
+        },
+        extracurricular: {
+          title: "",
+          description: "",
+          date: "",
+        },
+        languages1: {
+          title: "",
+          proficiency:  "",
+        },
+        programs1: {
+          title: "",
+          proficiency:  "",
+        },
+        softskills: {
+          title: "",
+        },
+        awards1: {
+          title: "",
+          receivedfrom:  "",
+          date: "",
+          description: "",
+        },
+        proficiencylist: [
+          "Beginner",
+          "Intermediate",
+          "Proficient",
+          "Advanced",
+          "Expert"
+        ],
         page: "form",
         colors: [
             "orange",
@@ -31,6 +69,8 @@ var app= new Vue ({
                 state:"",
                 zip:"", 
                 country: "",
+                email: "",
+                phone: "",
             }
         ],
         
