@@ -76,14 +76,21 @@
                                         <v-expansion-panel-content>
                                             <template v-slot:header> <v-card-text class="display-1">Work experience</v-card-text></template>
                                             <v-card class="ma-2 pa-4">
-                                                <v-text-field label="Company" v-model="workexp1.work1company"></v-text-field>
-                                                <v-text-field label="Job Title" v-model="workexp1.work1title"></v-text-field>
+                                                <v-card  flat v-for="experience in workexplist">
+                                                    <v-card-title>{{experience.work_title}}, {{experience.work_startdate}} - {{experience.work_enddate}}</v-card-title>
+                                                    <v-card-text>{{experience.work_company}}</v-card-text>
+                                                    <v-card-text>{{experience.work_description}}</v-card-text>
+                                                    <v-btn icon><v-icon color="red">delete</v-icon></v-btn>
+                                                    <v-btn icon><v-icon color="red">edit</v-icon></v-btn>
+                                                </v-card>
+                                                <v-text-field label="Company" v-model="workexpEdit.work_company"></v-text-field>
+                                                <v-text-field label="Job Title" v-model="workexpEdit.work_title"></v-text-field>
                                                 <v-menu
-                                                    ref="menu"
-                                                    v-model="menu"
+                                                    ref="workexpEdit.start_menu"
+                                                    v-model="workexpEdit.start_menu"
                                                     :close-on-content-click="false"
                                                     :nudge-right="40"
-                                                    :return-value.sync="date"
+                                                    :return-value.sync="workexpEdit.work_startdate"
                                                     lazy
                                                     transition="scale-transition"
                                                     offset-y
@@ -92,22 +99,26 @@
                                                 >
                                                     <template v-slot:activator="{ on }">
                                                     <v-text-field
-                                                        v-model="workexp1.work1startdate"
+                                                        v-model="workexpEdit.work_startdate"
                                                         label="Start date"
                                                         prepend-icon="event"
                                                         readonly
                                                         v-on="on"
                                                     ></v-text-field>
                                                     </template>
-                                                    <v-date-picker v-model="workexp1.work1startdate"></v-date-picker>
+                                                    <v-date-picker v-model="workexpEdit.work_startdate">
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn flat color="primary" @click="workexpEdit.start_menu = false">Cancel</v-btn>
+                                                        <v-btn flat color="primary" @click="$refs.workexpEdit.start_menu.save(workexpEdit.work_startdate)">OK</v-btn>
+                                                    </v-date-picker>
                                                 </v-menu>
-    
+                                                
                                                 <v-menu
-                                                    ref="menu"
-                                                    v-model="menu"
-                                                    :close-on-content-click="false"
+                                                    ref="workexpedit.end_menu"
+                                                    v-model="workexpEdit.end_menu"
+                                                    :close-on-content-click="true"
                                                     :nudge-right="40"
-                                                    :return-value.sync="date"
+                                                    :return-value.sync="workexpEdit.work_enddate"
                                                     lazy
                                                     transition="scale-transition"
                                                     offset-y
@@ -115,89 +126,106 @@
                                                     min-width="290px">
                                                     <template v-slot:activator="{ on }">
                                                         <v-text-field
-                                                            v-model="workexp1.work1enddate"
+                                                            v-model="workexpEdit.work_enddate"
                                                             label="End date"
                                                             prepend-icon="event"
                                                             readonly
                                                             v-on="on"
                                                         ></v-text-field>
                                                     </template>
-                                                    <v-date-picker v-model="workexp1.work1enddate"></v-date-picker>
+                                                    
+                                                    <v-date-picker v-model="workexpEdit.work_enddate"></v-date-picker>
                                                 </v-menu>
-                                                <v-text-field label="Brief description" v-model="workexp1.work1description"></v-text-field>
+                                                <v-text-field label="Brief description" v-model="workexpEdit.work_description"></v-text-field>
+                                                <v-btn @click="addWork()">Add Work Experience</v-btn>
                                             </v-card>
                                         </v-expansion-panel-content>
                                         <v-expansion-panel-content id="education">
                                                 <template v-slot:header> <v-card-text class="display-1">Education</v-card-text></template>
                                                 <v-card class="ma-2 pa-4">
-                                                    <v-text-field label="School attended" v-model="education1.college"></v-text-field>
-                                                    <v-text-field label="Degree" v-model="education1.degree"></v-text-field>
-        
-                                                    <v-menu
-                                                    ref="menu"
-                                                    v-model="menu"
-                                                    :close-on-content-click="false"
-                                                    :nudge-right="40"
-                                                    :return-value.sync="date"
-                                                    lazy
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    full-width
-                                                    min-width="290px">
+                                                    <v-card  flat v-for="school in educationlist">
+                                                            <v-card-title>{{school.college}}, {{school.degree}} - {{school.gradyear}}</v-card-title>
+                                    
+                                                            <v-btn icon><v-icon color="red">delete</v-icon></v-btn>
+                                                            <v-btn icon><v-icon color="red">edit</v-icon></v-btn>
+                                                        </v-card>
+                                                    <v-text-field label="School attended" v-model="educationEdit.college"></v-text-field>
+                                                    <v-text-field label="Degree" v-model="educationEdit.degree"></v-text-field>
                                                     <template v-slot:activator="{ on }">
                                                         <v-text-field
-                                                            v-model="education1.gradyear"
+                                                            v-model="educationEdit.gradyear"
                                                             label="Graduation"
                                                             prepend-icon="event"
                                                             readonly
                                                             v-on="on"
                                                         ></v-text-field>
                                                     </template>
-                                                    <v-date-picker v-model="education1.gradyear"></v-date-picker>
+                                                    <v-menu
+                                                    ref="educationlist.menu"
+                                                    v-model="educationlist.menu"
+                                                    :close-on-content-click="false"
+                                                    :nudge-right="40"
+                                                    :return-value.sync="educationEdit.gradyear"
+                                                    lazy
+                                                    transition="scale-transition"
+                                                    offset-y
+                                                    full-width
+                                                    min-width="290px">
+                                                    
+                                                    <v-date-picker v-model="educationEdit.gradyear"></v-date-picker>
+                                                    </v-menu>
+                                                    <v-btn @click="addEducation()">Add Education</v-btn>
+
                                                 </v-card>
                                         </v-expansion-panel-content>
 
                                         <v-expansion-panel-content id="accomplishments">
                                                 <template v-slot:header> <v-card-text class="display-1">Accomplishments</v-card-text></template>
                                                 <v-card class="ma-2 pa-4">
-                                                    <v-text-field label="Accomplishment" v-model="accomplishment1.title"></v-text-field>
-                                                    <v-textarea label="Brief description" v-model="accomplishment1.description"></v-textarea>
+                                                    <v-text-field label="Accomplishment" v-model="accomplishmentEdit.title"></v-text-field>
+                                                    <v-textarea label="Brief description" v-model="accomplishmentEdit.description"></v-textarea>
+                                                    <v-btn @click="addAccomplishment()">Add Accomplishment</v-btn>
+
                                                 </v-card>
                                         </v-expansion-panel-content>
 
                                         <v-expansion-panel-content id="languages">
                                                 <template v-slot:header> <v-card-text class="display-1">Languages</v-card-text></template>
                                                 <v-card class="ma-2 pa-4">
-                                                    <v-text-field label="Languages" v-model="languages1.title"></v-text-field>
+                                                    <v-text-field label="Languages" v-model="languagesEdit.title"></v-text-field>
                                                     <v-select
                                                         :items="proficiencylist"
                                                         label="Proficiency"
                                                         editable
                                                         item-value=""
-                                                        v-model="languages1.proficiency">
+                                                        v-model="languagesEdit.proficiency">
                                                     </v-select>
+                                                    <v-btn @click="addLanguage()">Add Language</v-btn>
+
                                                 </v-card>
                                         </v-expansion-panel-content>
 
-                                        <v-expansion-panel-content id="tech skills">
+                                        <v-expansion-panel-content id="techskills">
                                                 <template v-slot:header> <v-card-text class="display-1">Programs & Software</v-card-text></template>
                                                 <v-card class="ma-2 pa-4">
-                                                    <v-text-field label="Languages" v-model="programs1.title"></v-text-field>
+                                                    <v-text-field label="Tech skill" v-model="programsEdit.title"></v-text-field>
                                                     <v-select
                                                         :items="proficiencylist"
                                                         label="Programs or Software"
                                                         editable
                                                         item-value=""
-                                                        v-model="programs1.proficiency">
+                                                        v-model="programsEdit.proficiency">
                                                     </v-select>
+                                                    <v-btn @click="addSkill()">Add Skill</v-btn>
+
                                                 </v-card>
                                         </v-expansion-panel-content>
 
                                         <v-expansion-panel-content id="awards">
                                                 <template v-slot:header> <v-card-text class="display-1">Awards</v-card-text></template>
                                                 <v-card class="ma-2 pa-4">
-                                                    <v-text-field label="Title" v-model="awards1.title"></v-text-field>
-                                                    <v-text-field label="Received from" v-model="awards1.receivedfrom"></v-text-field>
+                                                    <v-text-field label="Title" v-model="awardsEdit.title"></v-text-field>
+                                                    <v-text-field label="Received from" v-model="awardsEdit.receivedfrom"></v-text-field>
                                                     <v-menu
                                                         ref="menu"
                                                         v-model="menu"
@@ -211,24 +239,25 @@
                                                         min-width="290px">
                                                         <template v-slot:activator="{ on }">
                                                             <v-text-field
-                                                                v-model="awards1.date"
+                                                                v-model="awardsEdit.date"
                                                                 label="Date"
                                                                 prepend-icon="event"
                                                                 readonly
                                                                 v-on="on"
                                                             ></v-text-field>
                                                         </template>
-                                                        <v-date-picker v-model="awards1.date"></v-date-picker>
+                                                        <v-date-picker v-model="awardsEdit.date"></v-date-picker>
                                                     </v-menu>
-                                                    <v-textarea label="Brief description" v-model="workexp1.work1description"></v-textarea>
+                                                    <v-textarea label="Brief description" v-model="workexpEdit.work1description"></v-textarea>
+                                                    <v-btn @click="addAward()">Add Award</v-btn>
                                                 </v-card>
                                         </v-expansion-panel-content>
 
-                                        <v-expansion-panel-content id="extracurricular">
+                                        <v-expansion-panel-content id="extracurricularEdit">
                                                 <template v-slot:header> <v-card-text class="display-1">Extracurricular</v-card-text></template>
                                                 <v-card class="ma-2 pa-4">
-                                                    <v-text-field label="Activity" v-model="extracurricular.title"></v-text-field>
-                                                    <v-textarea label="Brief description" v-model="extracurricular.description"></v-textarea>
+                                                    <v-text-field label="Activity" v-model="extracurricularEdit.title"></v-text-field>
+                                                    <v-textarea label="Brief description" v-model="extracurricularEdit.description"></v-textarea>
                                                     <v-menu
                                                         ref="menu"
                                                         v-model="menu"
@@ -242,22 +271,22 @@
                                                         min-width="290px">
                                                         <template v-slot:activator="{ on }">
                                                             <v-text-field
-                                                                v-model="extracurricular.date"
+                                                                v-model="extracurricularEdit.date"
                                                                 label="Date"
                                                                 prepend-icon="event"
                                                                 readonly
                                                                 v-on="on"
                                                             ></v-text-field>
                                                         </template>
-                                                        <v-date-picker v-model="extracurricular.date"></v-date-picker>
+                                                        <v-date-picker v-model="extracurricularEdit.date"></v-date-picker>
                                                     </v-menu>
                                                 </v-card>
                                         </v-expansion-panel-content>
 
-                                        <v-expansion-panel-content id="sofskills">
+                                        <v-expansion-panel-content id="sofskillsEdit">
                                                 <template v-slot:header> <v-card-text class="display-1">Soft Skill</v-card-text></template>
                                                 <v-card class="ma-2 pa-4">
-                                                    <v-text-field label="Soft Skills" v-model="softskills.title"></v-text-field>
+                                                    <v-text-field label="Soft Skills" v-model="softskillsEdit.title"></v-text-field>
                                                 </v-card>
                                         </v-expansion-panel-content>
 

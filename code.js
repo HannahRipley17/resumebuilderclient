@@ -4,39 +4,56 @@ var app= new Vue ({
     el: "#app1",
 
     data: {
-        workexp1: {
-            work1company: "",
-            work1title: "",
-            work1startdate: "",
-            work1enddate: "",
-            work1description: "",
+      
+
+        educationlist:[],
+        workexplist:[],
+        accomplishmentlist: [],
+        extracurricularlist:[],
+        languageslist:[],
+        programslist:[],
+        softskillslist:[],
+        awardslist:[],
+
+        workexpEdit: {
+            work_company: "",
+            work_title: "",
+            work_startdate: new Date().toISOString().substr(0, 10),
+            work_enddate: new Date().toISOString().substr(0, 10),
+            work_description: "",
+            start_menu: false,
+            end_menu: false,
+
         },
-        education1: {
+
+        educationEdit: {
           college: "",
           degree: "",
           gradyear: "",
+          menu: false
         },
-        accomplishment1: {
+        
+        accomplishmentEdit: {
           title: "",
           description: "",
         },
-        extracurricular: {
+        extracurricularEdit: {
           title: "",
           description: "",
           date: "",
         },
-        languages1: {
+        languagesEdit: {
           title: "",
           proficiency:  "",
         },
-        programs1: {
+        programsEdit: {
           title: "",
           proficiency:  "",
         },
-        softskills: {
+        softskillsEdit: {
           title: "",
         },
-        awards1: {
+        awardsEdit: {
           title: "",
           receivedfrom:  "",
           date: "",
@@ -77,6 +94,71 @@ var app= new Vue ({
     },
 
     methods: {
+      addWork: function(){
+        this.workexplist.push(this.workexpEdit)
+        this.workexpEdit={
+          work1company: "",
+          work1title: "",
+          work1startdate: "",
+          work1enddate: "",
+          work1description: "",
+          
+        }
+      },
+        addEducation: function(){
+          this.educationlist.push(this.educationEdit)
+
+          this.educationEdit= {
+            college: "",
+            degree: "",
+            gradyear: "",
+            menu: false
+          }
+        
+      },
+
+      addAccomplishment: function(){
+        this.accomplishmentlist.push(this.accomplishmentEdit)
+
+        this.accomplishmentEdit= {
+          title: "",
+          description: "",
+        }
+
+      },
+
+      addLanguage: function(){
+        this.languageslist.push(this.languagesEdit)
+
+        this.languagesEdit= {
+          title: "",
+          proficiency:  "",
+        }
+
+
+      },
+
+      addSkill: function(){
+        this.programslist.push(this.programsEdit)
+
+        this.programsEdit= {
+          title: "",
+          proficiency:  "",
+        }
+
+
+      },
+
+      addAward: function(){
+        this.awardslist.push(this.awardsEdit)
+
+        this.awardsEdit= {
+          title: "",
+          receivedfrom:  "",
+          date: "",
+          description: "",
+        }
+      },
 
     },
 
