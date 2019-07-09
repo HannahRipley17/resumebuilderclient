@@ -1,5 +1,3 @@
-
-
 var app= new Vue ({
     el: "#app1",
 
@@ -49,7 +47,7 @@ var app= new Vue ({
           "Advanced",
           "Expert"
         ],
-        page: "form",
+        page: "preview",
         colors: [
             "orange",
             "black",
@@ -60,20 +58,20 @@ var app= new Vue ({
         picked_color: "black",
         color_brightness: 6,
         accent: 0,
-        info: [
+        info:
             {
-                first_name:"",
-                last_name:"",
-                address: "",
-                city:"",
-                state:"",
-                zip:"", 
-                country: "",
-                email: "",
-                phone: "",
-            }
-        ],
-        
+                first_name:"Bob",
+                last_name:"Flem",
+                professional_title: "UI Designer",
+                address: "1717 E Flaming Gorge Lane",
+                city:"Kansas City",
+                state:"Kansas",
+                zip:"83233",
+                country: "United States",
+                email: "jsjsjsjsj@gmail.com",
+                phone: 288-888-8888,
+                summary:"Woah! I'm literally the best person in the world. You should totally hire me my dude.",
+            },
     },
 
     methods: {
@@ -99,4 +97,4 @@ var app= new Vue ({
           }
         },
       },
-})
+});
