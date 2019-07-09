@@ -2,6 +2,29 @@ var app= new Vue ({
     el: "#app1",
 
     data: {
+      workexplist: [
+        {
+            workcompany: "Apple",
+            worktitle: "Developer",
+            workstartdate: "Jun 5 2019",
+            workenddate: "Jun 12 2022",
+            workdescription: "Developed the I-bot.",
+        },
+        {
+            workcompany: "Apple",
+            worktitle: "Developer",
+            workstartdate: "Jun 5 2019",
+            workenddate: "Jun 12 2022",
+            workdescription: "Developed the I-bot.",
+        },
+        {
+            workcompany: "Apple",
+            worktitle: "Developer",
+            workstartdate: "Jun 5 2019",
+            workenddate: "Jun 12 2022",
+            workdescription: "Developed the I-bot.",
+        },
+      ],
         workexp1: {
             work1company: "",
             work1title: "",
@@ -69,7 +92,7 @@ var app= new Vue ({
                 zip:"83233",
                 country: "United States",
                 email: "jsjsjsjsj@gmail.com",
-                phone: 288-888-8888,
+                phone: "288-888-8888",
                 summary:"Woah! I'm literally the best person in the world. You should totally hire me my dude.",
             },
     },
